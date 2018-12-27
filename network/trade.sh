@@ -1,5 +1,8 @@
 #!/bin/bash
-#
+
+# Exit on first error, print all commands.
+set -e
+
 # Copyright 2018 IBM All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -319,7 +322,7 @@ function replacePrivateKey () {
     cd crypto-config/peerOrganizations/devorg.trade.com/ca/
     PRIV_KEY=$(ls *_sk)
     cd "$CURRENT_DIR"
-    sed -i "s/DEVORG_CA_PRIVATE_KEY/${PRIV_KEY}/g" docker-compose-e2e.yaml
+    sed -i '' "s/DEVORG_CA_PRIVATE_KEY/${PRIV_KEY}/g" docker-compose-e2e.yaml
   else
     # The next steps will replace the template's contents with the
     # actual values of the private key file names for the two CAs.
@@ -327,19 +330,19 @@ function replacePrivateKey () {
     cd crypto-config/peerOrganizations/exporterorg.trade.com/ca/
     PRIV_KEY=$(ls *_sk)
     cd "$CURRENT_DIR"
-    sed -i "s/EXPORTER_CA_PRIVATE_KEY/${PRIV_KEY}/g" docker-compose-e2e.yaml
+    sed -i '' "s/EXPORTER_CA_PRIVATE_KEY/${PRIV_KEY}/g" docker-compose-e2e.yaml
     cd crypto-config/peerOrganizations/importerorg.trade.com/ca/
     PRIV_KEY=$(ls *_sk)
     cd "$CURRENT_DIR"
-    sed -i "s/IMPORTER_CA_PRIVATE_KEY/${PRIV_KEY}/g" docker-compose-e2e.yaml
+    sed -i '' "s/IMPORTER_CA_PRIVATE_KEY/${PRIV_KEY}/g" docker-compose-e2e.yaml
     cd crypto-config/peerOrganizations/carrierorg.trade.com/ca/
     PRIV_KEY=$(ls *_sk)
     cd "$CURRENT_DIR"
-    sed -i "s/CARRIER_CA_PRIVATE_KEY/${PRIV_KEY}/g" docker-compose-e2e.yaml
+    sed -i '' "s/CARRIER_CA_PRIVATE_KEY/${PRIV_KEY}/g" docker-compose-e2e.yaml
     cd crypto-config/peerOrganizations/regulatororg.trade.com/ca/
     PRIV_KEY=$(ls *_sk)
     cd "$CURRENT_DIR"
-    sed -i "s/REGULATOR_CA_PRIVATE_KEY/${PRIV_KEY}/g" docker-compose-e2e.yaml
+    sed -i '' "s/REGULATOR_CA_PRIVATE_KEY/${PRIV_KEY}/g" docker-compose-e2e.yaml
   fi
 }
 
@@ -353,7 +356,7 @@ function replacePrivateKeyForNewOrg () {
   cd crypto-config/peerOrganizations/exportingentityorg.trade.com/ca/
   PRIV_KEY=$(ls *_sk)
   cd "$CURRENT_DIR"
-  sed -i "s/EXPORTINGENTITY_CA_PRIVATE_KEY/${PRIV_KEY}/g" add_org/docker-compose-exportingEntityOrg.yaml
+  sed -i '' "s/EXPORTINGENTITY_CA_PRIVATE_KEY/${PRIV_KEY}/g" add_org/docker-compose-exportingEntityOrg.yaml
 }
 
 # We will use the cryptogen tool to generate the cryptographic material (x509 certs)
@@ -602,7 +605,7 @@ CHANNEL_NAME="tradechannel"
 COMPOSE_FILE=docker-compose-e2e.yaml
 COMPOSE_FILE_NEW_ORG=add_org/docker-compose-exportingEntityOrg.yaml
 # default image tag
-IMAGETAG="latest"
+IMAGETAG="x86_64-1.1.0"
 # default log file
 LOG_FILE="logs/network.log"
 LOG_FILE_NEW_ORG="logs/network-neworg.log"

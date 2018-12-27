@@ -19,7 +19,7 @@ version: '2'
 services:
   orderer:
     container_name: orderer
-    image: hyperledger/fabric-orderer
+    image: hyperledger/fabric-orderer:$IMAGE_TAG
     environment:
       - ORDERER_GENERAL_LOGLEVEL=debug
       - ORDERER_GENERAL_LISTENADDRESS=orderer
@@ -38,7 +38,7 @@ services:
       - 7050:7050
   peer:
     container_name: peer
-    image: hyperledger/fabric-peer
+    image: hyperledger/fabric-peer:$IMAGE_TAG
     environment:
       - CORE_PEER_ID=peer0.devorg.trade.com
       - CORE_PEER_ADDRESS=peer:7051
@@ -72,7 +72,7 @@ services:
 
   cli:
     container_name: cli
-    image: hyperledger/fabric-ca-tools
+    image: hyperledger/fabric-ca-tools:$IMAGE_TAG
     tty: true
     environment:
       - GOPATH=/opt/gopath
@@ -95,7 +95,7 @@ services:
 
   chaincode:
     container_name: chaincode
-    image: hyperledger/fabric-ccenv
+    image: hyperledger/fabric-ccenv:$IMAGE_TAG
     tty: true
     environment:
       - GOPATH=/opt/gopath

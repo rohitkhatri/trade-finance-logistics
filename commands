@@ -1,0 +1,19 @@
+cd network
+
+################# Create Crypto Materials #################
+rm -rf crypto-config
+cryptogen generate --config=./crypto-config.yaml
+
+################# Create Genesis Block #################
+rm -rf channel-artifacts
+mkdir channel-artifacts
+configtxgen -profile FourOrgsTradeOrdererGenesis -outputBlock ./channel-artifacts/genesis.block
+
+################# Generate Channel Configuration #################
+configtxgen -profile FourOrgsTradeChannel -outputCreateChannelTx ./channel-artifacts/channel.tx -channelID tradechannel
+
+################# Generate Anchor Peer Configuration Orgs #################
+configtxgen -profile FourOrgsTradeChannel -outputAnchorPeersUpdate ./channel-artifacts/ExporterOrgMSPanchors.tx -channelID tradechannel -asOrg ExporterOrgMSP
+configtxgen -profile FourOrgsTradeChannel -outputAnchorPeersUpdate ./channel-artifacts/ImporterOrgMSPanchors.tx -channelID tradechannel -asOrg ImporterOrgMSP
+configtxgen -profile FourOrgsTradeChannel -outputAnchorPeersUpdate ./channel-artifacts/CarrierOrgMSPanchors.tx -channelID tradechannel -asOrg CarrierOrgMSP
+configtxgen -profile FourOrgsTradeChannel -outputAnchorPeersUpdate ./channel-artifacts/RegulatorOrgMSPanchors.tx -channelID tradechannel -asOrg RegulatorOrgMSP
